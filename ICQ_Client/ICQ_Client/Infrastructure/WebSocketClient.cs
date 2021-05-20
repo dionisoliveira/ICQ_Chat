@@ -21,7 +21,8 @@ namespace ICQ_Client.Infrastructure
         int bytesRead;
         private byte[] receiveBuffer = new byte[408300]; //
         private string[] resultParse;
-        private string command;
+        private string useConnected;
+        private string currentGroup;
 
 
         public void InitClient(string ipServer, int portServer)
@@ -44,13 +45,19 @@ namespace ICQ_Client.Infrastructure
 
 
 
-                SendMessage("9001 \\ $");
+                SendMessage("9001 $");
 
                 while (true)
                 {
                     var message = Console.ReadLine();
 
-                    SendMessage(command + "\\" + message);
+
+                    if (!string.IsNullOrEmpty(useConnected) && !string.IsNullOrEmpty(currentGroup))
+                        SendMessage("GCOMMAND " + message + " " + useConnected + " " + currentGroup);
+                    else if (!string.IsNullOrEmpty(useConnected))
+                        SendMessage(message + " " + useConnected + " " + currentGroup);
+                    else
+                        SendMessage(message);
 
                 }
 
@@ -71,7 +78,6 @@ namespace ICQ_Client.Infrastructure
 
             }
 
-            //  }
         }
         private void ReceiveCallback(IAsyncResult _result)
         {
@@ -82,8 +88,14 @@ namespace ICQ_Client.Infrastructure
                 messageProcess = messageProcess.Substring(0, messageProcess.IndexOf("$"));
                 resultParse = messageProcess.Split("\\");
                 Console.WriteLine(resultParse[0]);
-                    command = "0";
-               // command = resultParse.Length > 1 ? resultParse[1] : "";
+                if (string.IsNullOrEmpty(useConnected))
+                {
+                    useConnected = resultParse.Length > 1 ? resultParse[1] : "";
+                }
+                else
+                {
+                    currentGroup = resultParse.Length > 2 ? resultParse[resultParse.Length-1] : "";
+                }
                 byte[] bufferLocal = new byte[408300]; // Adapt the size based on what you want to do with the data
                 _clientSocket.Client.BeginReceive(bufferLocal, 0, bufferLocal.Length, SocketFlags.None, ReceiveCallback, bufferLocal);
 
@@ -96,7 +108,7 @@ namespace ICQ_Client.Infrastructure
             catch (Exception e)
             {
                 Console.WriteLine($"Não conseguimos reconectar no servidor: {Environment.NewLine} 1-Reconectar ;{Environment.NewLine} 2-Sair");
-                byte[] outStrem = System.Text.Encoding.ASCII.GetBytes("9001 \\ $");
+                byte[] outStrem = System.Text.Encoding.ASCII.GetBytes("9001$");
 
 
 

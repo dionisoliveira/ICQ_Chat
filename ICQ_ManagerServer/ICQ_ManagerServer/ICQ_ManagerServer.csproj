@@ -10,6 +10,7 @@
     <Folder Include="Interface\" />
     <Folder Include="Model\" />
     <Folder Include="Domain\" />
+    <Folder Include="Const\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />

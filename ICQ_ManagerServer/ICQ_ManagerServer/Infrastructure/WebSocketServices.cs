@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using ICQ_ManagerServer.Interface;
+using ICQ_ManagerServer.Model;
 
 namespace ICQ_ManagerServer.Infrastructure
 {
@@ -83,7 +84,7 @@ namespace ICQ_ManagerServer.Infrastructure
         {
             byte[] bytesFrom = new byte[408300];
             NetworkStream stream = _clientSocket.GetStream();
-            System.IO.StreamWriter _serverStreamWrite;
+            StreamWriter _serverStreamWrite;
             while (true)
             {
                 try
@@ -93,19 +94,22 @@ namespace ICQ_ManagerServer.Infrastructure
                     {
 
 
-                         _serverStreamWrite = new System.IO.StreamWriter(_clientSocket.GetStream());
+                        _serverStreamWrite = new System.IO.StreamWriter(_clientSocket.GetStream());
                         stream.Read(bytesFrom, 0, (int)_clientSocket.ReceiveBufferSize);
                         var messageProcess = System.Text.Encoding.ASCII.GetString(bytesFrom);
                         messageProcess = messageProcess.Substring(0, messageProcess.IndexOf("$"));
-                        var messagereturn = _chatManager.ProcessMessage(messageProcess, _serverStreamWrite);
-                        byte[] outStrem = System.Text.Encoding.ASCII.GetBytes(messagereturn.Message);
-                        _serverStreamWrite.WriteLine(messagereturn.Message + "$");
-                      
 
-                        foreach (var user in _chatManager.GetUsers())
+
+
+                        var messagereturn = _chatManager.ProcessMessage(messageProcess, _serverStreamWrite);
+
+                        if (messagereturn.IsBroadCast)
                         {
-                            (user.ConnectionSocket as StreamWriter).WriteLine("Para todos" + "$");
-                            (user.ConnectionSocket as StreamWriter).Flush();
+                            SendBroadcast(messagereturn);
+                        }
+                        else
+                        {
+                            SendMessage(messagereturn, _serverStreamWrite);
                         }
 
                         _serverStreamWrite.Flush();
@@ -124,6 +128,34 @@ namespace ICQ_ManagerServer.Infrastructure
 
 
             }
+        }
+
+        private void SendBroadcast(ReturnMessage returnMessage)
+        {
+
+            foreach (var socket in returnMessage.UsersBroadcastMessage)
+            {
+
+                try
+                {
+                    (socket.ConnectionSocket as StreamWriter).WriteLine(returnMessage.Message + "$");
+                    (socket.ConnectionSocket as StreamWriter).Flush();
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private void SendMessage(ReturnMessage returnMessage, StreamWriter streamWriter)
+        {
+
+
+
+            streamWriter.WriteLine(returnMessage.Message + "$");
+            streamWriter.Flush();
+
         }
 
 

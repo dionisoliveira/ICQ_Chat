@@ -8,18 +8,21 @@ namespace ICQ_ManagerServer.Interface
     {
         ReturnMessage UserCreate(string user_identifier, object connectionSocket);
 
-        ReturnMessage ListGroupInServer(); // Command ls
+        ReturnMessage GetGroupInServer();
 
 
-        ReturnMessage ConnectionStabilished(object connectionSocket);
-        ReturnMessage UserCreateGroupConection(string group_identifier);
+
+
+        ReturnMessage ConnectionStabilished();
+
+        ReturnMessage CreateNewGroup(string[] parameter);
 
         ReturnMessage UserConnectToGroup(string group_identifier);
 
-        ReturnMessage UserSendGroupMessage(string grou_identifier, string message);
+        ReturnMessage SendBroadcastGroupMessage(string[] parameter);
 
         ReturnMessage ProcessMessage(string message, object connectionSocket);
 
-        List<User> GetUsers();
+        ReturnMessage GetUserInServer();
     }
 }
