@@ -13,10 +13,14 @@ Para iniciar o bate papo é necessário criar o primeiro usuário com o commando
 
 
 
-****Desenvolvimento ICQ_Server:
+****Desenvolvimento:
+
+TcpListener/TcpClient
 
 Utilizado IoC para injeção de dependência e desacoplamento das camadas.
 
 Aplicado testes unitários com MSTest
 
 Aplicado separação de responsabilidade por camadas no projeto ICQ_Server.
+
+No client foi adicionado regra de retry para manter a resiliência da aplicação caso o servidor pare de responder.
