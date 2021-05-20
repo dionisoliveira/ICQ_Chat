@@ -1,22 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using ICQ_ManagerServer.Model;
+
 namespace ICQ_ManagerServer.Interface
 {
     public interface IChatManager
     {
-        string UserCreate(string user_identifier, object connectionSocket);
+        ReturnMessage UserCreate(string user_identifier, object connectionSocket);
 
-        void ListGroupInServer(); // Command ls
-
-
-
-        bool UserCreateGroupConection(string group_identifier);
-
-        bool UserConnectToGroup(string group_identifier);
-
-        bool UserSendGroupMessage(string grou_identifier, string message);
-
-        void ProcessMessage(string message, object connectionSocket);
+        ReturnMessage ListGroupInServer(); // Command ls
 
 
+        ReturnMessage ConnectionStabilished(object connectionSocket);
+        ReturnMessage UserCreateGroupConection(string group_identifier);
+
+        ReturnMessage UserConnectToGroup(string group_identifier);
+
+        ReturnMessage UserSendGroupMessage(string grou_identifier, string message);
+
+        ReturnMessage ProcessMessage(string message, object connectionSocket);
+
+        List<User> GetUsers();
     }
 }

@@ -20,7 +20,7 @@ namespace ICQ_ManagerServer
         private static void StartServer()
         {
             var server = _container.GetService<IWebSockertService>();
-            server.InitServer("127.0.0.1",8080);
+            server.InitServer("127.0.0.1",8085);
         }
     }
 }

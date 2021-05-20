@@ -1,4 +1,5 @@
 ﻿using System;
+using ICQ_Client.Infrastructure;
 
 namespace ICQ_Client
 {
@@ -6,7 +7,7 @@ namespace ICQ_Client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+             new WebSocketClient().InitClient("127.0.0.1", 8085);
         }
     }
 }
