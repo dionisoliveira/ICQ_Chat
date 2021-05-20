@@ -11,4 +11,13 @@
   <ItemGroup>
     <ProjectReference Include="..\ICQ_App\ICQ_App.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Const\CommandConst.cs" />
+    <Compile Remove="Interface\IChatManager.cs" />
+    <Compile Remove="Interface\IWebSockertService.cs" />
+    <Compile Remove="Model\User.cs" />
+    <Compile Remove="Model\Group.cs" />
+    <Compile Remove="Infrastructure\WebSocketServices.cs" />
+    <Compile Remove="Domain\ChatManager.cs" />
+  </ItemGroup>
 </Project>
