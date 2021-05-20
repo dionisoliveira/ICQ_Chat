@@ -10,16 +10,15 @@ namespace ICQ_Client.Infrastructure
     public class WebSocketClient : IWebSockerClient
     {
         private TcpClient _clientSocket;
-        StreamReader _serverStreamReader;
-        StreamWriter _serverStreamWrite;
+        private StreamReader _serverStreamReader;
+        private StreamWriter _serverStreamWrite;
+
         private int _maxRetryConnection = 3;
         private int _retryConnection = 0;
         private int _timeSleepToRetry = 60;
-        public static int dataBufferSize = 408300;
-        byte[] buffer = new byte[408300]; // Adapt the size based on what you want to do with the data
-        char[] charBuffer = new char[408300];
-        int bytesRead;
-        private byte[] receiveBuffer = new byte[408300]; //
+
+        byte[] buffer = new byte[408300];
+
         private string[] resultParse;
         private string useConnected;
         private string currentGroup;
@@ -29,106 +28,114 @@ namespace ICQ_Client.Infrastructure
         {
 
 
-            //   while (_retryConnection < _maxRetryConnection)
-            //  {
-            try
+            while (_retryConnection < _maxRetryConnection)
             {
-
-                var decoder = Encoding.UTF8.GetDecoder();
-
-
-                _clientSocket = new TcpClient(ipServer, portServer);
-                _serverStreamReader = new System.IO.StreamReader(_clientSocket.GetStream());
-                _serverStreamWrite = new System.IO.StreamWriter(_clientSocket.GetStream());
-
-                _clientSocket.Client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, buffer);
-
-
-
-                SendMessage("9001 $");
-
-                while (true)
+                try
                 {
-                    var message = Console.ReadLine();
+                    StartClient(ipServer, portServer);
 
-
-                    if (!string.IsNullOrEmpty(useConnected) && !string.IsNullOrEmpty(currentGroup))
-                        SendMessage("GCOMMAND " + message + " " + useConnected + " " + currentGroup);
-                    else if (!string.IsNullOrEmpty(useConnected))
-                        SendMessage(message + " " + useConnected + " " + currentGroup);
-                    else
-                        SendMessage(message);
 
                 }
-
-            }
-            catch (Exception e)
-            {
-                _retryConnection += 1;
-                Console.WriteLine($"Tentando reconectar:{_retryConnection}");
-                Task.Delay(_timeSleepToRetry);
-                if (_retryConnection == _maxRetryConnection)
+                catch (Exception e)
                 {
-                    Console.WriteLine($"Não conseguimos reconectar no servidor: {Environment.NewLine} 1-Reconectar ;{Environment.NewLine} 2-Sair");
-                    var item = Console.ReadLine();
-                    if (Convert.ToInt16(item) == 1)
-                        _retryConnection = 0;
+                    _retryConnection += 1;
+                    Console.WriteLine($"Tentando reconectar:{_retryConnection}");
+                    Task.Delay(_timeSleepToRetry);
+                    if (_retryConnection == _maxRetryConnection)
+                    {
+                        Console.WriteLine($"Não conseguimos reconectar no servidor: {Environment.NewLine} 1-Reconectar ;{Environment.NewLine} 2-Sair");
+                        var item = Console.ReadLine();
+                        if (Convert.ToInt16(item) == 1)
+                            _retryConnection = 0;
+
+                    }
 
                 }
-
             }
 
         }
-        private void ReceiveCallback(IAsyncResult _result)
+
+        private void StartClient(string ipServer, int portServer)
+        {
+            var decoder = Encoding.UTF8.GetDecoder();
+
+
+            _clientSocket = new TcpClient(ipServer, portServer);
+            _serverStreamReader = new System.IO.StreamReader(_clientSocket.GetStream());
+            _serverStreamWrite = new System.IO.StreamWriter(_clientSocket.GetStream());
+
+            _clientSocket.Client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiverDataCallback, buffer);
+
+
+
+            //Start Connection
+            SendData("9001 $");
+
+            while (true)
+            {
+                var message = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(useConnected) && !string.IsNullOrEmpty(currentGroup))
+                {
+                    message = message.Replace(" ", "\\*/");
+                    SendData("GCOMMAND " + message.Trim() + " " + useConnected + " " + currentGroup);
+                }
+                else if (!string.IsNullOrEmpty(useConnected))
+
+                    SendData(message + " " + useConnected + " " + currentGroup);
+                else
+                    SendData(message);
+
+            }
+        }
+
+
+        private void ReceiverDataCallback(IAsyncResult _result)
         {
             try
             {
                 byte[] byteData = _result.AsyncState as byte[];
-                var messageProcess = System.Text.Encoding.ASCII.GetString(byteData);
+                var messageProcess = Encoding.ASCII.GetString(byteData);
                 messageProcess = messageProcess.Substring(0, messageProcess.IndexOf("$"));
-                resultParse = messageProcess.Split("\\");
-                Console.WriteLine(resultParse[0]);
-                if (string.IsNullOrEmpty(useConnected))
-                {
-                    useConnected = resultParse.Length > 1 ? resultParse[1] : "";
-                }
-                else
-                {
-                    currentGroup = resultParse.Length > 2 ? resultParse[resultParse.Length-1] : "";
-                }
-                byte[] bufferLocal = new byte[408300]; // Adapt the size based on what you want to do with the data
-                _clientSocket.Client.BeginReceive(bufferLocal, 0, bufferLocal.Length, SocketFlags.None, ReceiveCallback, bufferLocal);
+               
+
+                MountUserAndGroup(messageProcess);
 
 
-
-
-
+                //Register new Callback 
+                byte[] bufferLocal = new byte[408300];
+                _clientSocket.Client.BeginReceive(bufferLocal, 0, bufferLocal.Length, SocketFlags.None, ReceiverDataCallback, bufferLocal);
 
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine($"Não conseguimos reconectar no servidor: {Environment.NewLine} 1-Reconectar ;{Environment.NewLine} 2-Sair");
-                byte[] outStrem = System.Text.Encoding.ASCII.GetBytes("9001$");
-
-
+                throw;
 
             }
         }
 
-        private void ReceiverData(SocketAsyncEventArgs events)
+        private void MountUserAndGroup(string messageProcess)
         {
+            resultParse = messageProcess.Split("\\");
+            Console.WriteLine(resultParse[0]);
 
+            if (string.IsNullOrEmpty(useConnected))
+            {
+                useConnected = resultParse.Length > 1 ? resultParse[1] : "";
+            }
+            else
+            {
+                currentGroup = resultParse.Length > 2 ? resultParse[resultParse.Length - 1].Trim() : "";
+            }
         }
 
-        public void SendMessage(string message)
+
+        public void SendData(string data)
         {
-            byte[] outStrem = System.Text.Encoding.ASCII.GetBytes(message + "$");
+
             var write = new StreamWriter(_clientSocket.GetStream());
-            write.WriteLine(message + "$");
+            write.WriteLine(data + "$");
             write.Flush();
-
-
-
 
         }
     }
