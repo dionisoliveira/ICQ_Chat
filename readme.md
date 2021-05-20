@@ -3,7 +3,7 @@ Projeto criado para simular uma sala de bate papo, permitindo criar usuários, g
 
 Para iniciar é necessário executar o projeto Server primeiro e após o projeto cliente.
 
-*******Linhas de comandos devem ser obedicidas. 
+*******Linhas de comandos devem ser obedecidas. 
 
 Para iniciar o bate papo é necessário criar o primeiro usuário com o commando: "UC NOME".
 
