@@ -5,7 +5,7 @@ Para iniciar é necessário executar o projeto Server primeiro e após o projeto
 
 *******Linhas de comandos devem ser obedecidas. 
 
-Para iniciar o bate papo é necessário criar o primeiro usuário com o commando: "UC NOME".
+Para iniciar o bate papo é necessário criar o primeiro usuário com o commando: "UC nameuser".
 
 *****Utilizar o Helper para identificar comandos disponíveis na aplicação.
 
