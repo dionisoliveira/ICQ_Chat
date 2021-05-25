@@ -1,9 +1,0 @@
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/bin/Debug/netcoreapp3.1/ICQ_AppDomain.deps.json
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/bin/Debug/netcoreapp3.1/ICQ_AppDomain.dll
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/bin/Debug/netcoreapp3.1/ICQ_AppDomain.pdb
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_AppDomain.AssemblyInfoInputs.cache
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_AppDomain.AssemblyInfo.cs
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_AppDomain.csproj.CoreCompileInputs.cache
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_AppDomain.dll
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_AppDomain.pdb
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_AppDomain.csprojAssemblyReference.cache

@@ -1,8 +1,0 @@
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/bin/Debug/netcoreapp3.1/ICQ_App.deps.json
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/bin/Debug/netcoreapp3.1/ICQ_App.dll
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/bin/Debug/netcoreapp3.1/ICQ_App.pdb
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_App.AssemblyInfoInputs.cache
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_App.AssemblyInfo.cs
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_App.csproj.CoreCompileInputs.cache
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_App.dll
-/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_App/obj/Debug/netcoreapp3.1/ICQ_App.pdb
