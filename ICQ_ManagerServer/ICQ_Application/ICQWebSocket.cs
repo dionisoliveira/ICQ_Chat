@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using ICQ_AppAplicattion;
 using ICQ_AppDomain;
 using ICQ_AppDomain.Adpters;
 using ICQ_ManagerServer.Interface;
@@ -30,13 +31,13 @@ namespace ICQ_ManagerServer
         {
             try
             {
-                
+
                 _server = new TcpListener(IPAddress.Parse(ipServer), portServer);
 
                 _server.Start();
                 Console.WriteLine("Server is run");
 
-                ListenerClient();
+                StartListenerServer();
 
             }
             catch (Exception e)
@@ -47,29 +48,24 @@ namespace ICQ_ManagerServer
         }
 
 
-        private void ListenerClient()
+        private void StartListenerServer()
         {
             Console.WriteLine($"Listener await connection");
-          
             while ((true))
             {
                 try
                 {
-
                     var _clientSocket = _server.AcceptTcpClient();
 
                     var thread = new Thread(() => NewListernerThread(_clientSocket));
                     thread.Start();
                     _listThask.Add(thread);
 
-
-
-
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine($"Finish:{ e.Message }");
-                    ListenerClient();
+                    StartListenerServer();
                 }
             }
         }
@@ -79,6 +75,7 @@ namespace ICQ_ManagerServer
             byte[] bytesFrom = new byte[408300];
             NetworkStream stream = _clientSocket.GetStream();
             StreamWriter _serverStreamWrite;
+            Console.WriteLine($"Connected ");
             while (true)
             {
                 try
@@ -86,34 +83,26 @@ namespace ICQ_ManagerServer
 
                     if (_clientSocket.Connected)
                     {
-
-
-                        _serverStreamWrite = new System.IO.StreamWriter(_clientSocket.GetStream());
+                        _serverStreamWrite = new StreamWriter(_clientSocket.GetStream());
                         stream.Read(bytesFrom, 0, (int)_clientSocket.ReceiveBufferSize);
-                        var messageProcess = System.Text.Encoding.ASCII.GetString(bytesFrom);
-                        messageProcess = messageProcess.Substring(0, messageProcess.IndexOf("$"));
+                        var dataReceiver = System.Text.Encoding.ASCII.GetString(bytesFrom);
+                        dataReceiver = dataReceiver.Substring(0, dataReceiver.IndexOf("$"));
 
 
+                        var dataInput = new DataInput() { Message = dataReceiver, Socket = _serverStreamWrite };
 
-                        var messagereturn = _chatManager.ProcessMessage(messageProcess, _serverStreamWrite);
+                        Console.WriteLine(dataReceiver);
 
-                        if (messagereturn.IsBroadCast)
+                        var resultData = _chatManager.ProcessDataReceiver(dataInput);
+
+                        if (resultData.IsBroadCast)
                         {
-                            SendBroadcast(messagereturn);
+                            SendBroadcast(resultData);
                         }
                         else
                         {
-                            if (messagereturn.ClientSocket == null)
-                            {
-                                SendMessage(messagereturn, _serverStreamWrite);
-                            }
-                            else
-                            {
-                                SendMessage(messagereturn, messagereturn.ClientSocket as StreamWriter);
-                            }
+                            SendMessage(resultData);
                         }
-
-                        _serverStreamWrite.Flush();
 
                     }
                     else
@@ -124,22 +113,19 @@ namespace ICQ_ManagerServer
                 catch (Exception e)
                 {
                     Console.WriteLine($"Finish Network:{ e.Message }");
-                    //  _serverStreamWrite.Close();
                 }
-
-
             }
         }
 
-        private void SendBroadcast(IResponse returnMessage)
+        private void SendBroadcast(IResponse response)
         {
 
-            foreach (var socket in returnMessage.UsersBroadcastMessage)
+            foreach (var socket in response.UsersBroadcastMessage)
             {
 
                 try
                 {
-                    (socket.ConnectionSocket as StreamWriter).WriteLine(returnMessage.Message + "$");
+                    (socket.ConnectionSocket as StreamWriter).WriteLine(response.Message + "$");
                     (socket.ConnectionSocket as StreamWriter).Flush();
                 }
                 catch
@@ -149,11 +135,11 @@ namespace ICQ_ManagerServer
             }
         }
 
-        private void SendMessage(IResponse returnMessage, StreamWriter streamWriter)
+        private void SendMessage(IResponse response)
         {
 
-            streamWriter.WriteLine(returnMessage.Message + "$");
-            streamWriter.Flush();
+            (response.Socket as StreamWriter).WriteLine(response.Message + "$");
+            (response.Socket as StreamWriter).Flush();
 
         }
 

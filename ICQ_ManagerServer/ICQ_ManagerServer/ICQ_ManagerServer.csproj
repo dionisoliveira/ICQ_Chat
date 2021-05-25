@@ -18,7 +18,7 @@
     <Compile Remove="Domain\ChatManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ICQ_WebSocketAdapter\ICQ_AppAplicattion.csproj" />
     <ProjectReference Include="..\ICQ_App\ICQ_AppDomain.csproj" />
+    <ProjectReference Include="..\ICQ_Application\ICQ_AppAplicattion.csproj" />
   </ItemGroup>
 </Project>

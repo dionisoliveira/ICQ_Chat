@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
-namespace ICQ_AppDomain.Entities
+﻿namespace ICQ_AppDomain.Entities
 {
     public class User : IUser
     {
@@ -10,7 +6,8 @@ namespace ICQ_AppDomain.Entities
 
         public object ConnectionSocket { get; set; }
 
-        //This list is return when user stabilish connection with server.
-        public IList<Group> GroupConnectionList { get; set; }
+
+
+
     }
 }
