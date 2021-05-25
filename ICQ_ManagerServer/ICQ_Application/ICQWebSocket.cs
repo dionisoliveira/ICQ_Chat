@@ -73,7 +73,7 @@ namespace ICQ_ManagerServer
             byte[] bytesFrom = new byte[408300];
             NetworkStream stream = _clientSocket.GetStream();
             StreamWriter _serverStreamWrite;
-            Console.WriteLine($"Connected ");
+            Console.WriteLine($"Connected....... ");
             while (true)
             {
                 try
