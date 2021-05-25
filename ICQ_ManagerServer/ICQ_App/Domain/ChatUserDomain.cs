@@ -59,5 +59,14 @@ namespace ICQ_ManagerServer.Domain
         {
             return _userList.Where(p => p.UserIdentifier == user_identifier).FirstOrDefault();
         }
+
+        public IResponse DMUser(string user_identifier,string message,IUser userMessage)
+        {
+            var user = _userList.FirstOrDefault(p => p.UserIdentifier.ToUpper() == user_identifier.ToUpper());
+            var directmessage = $"{userMessage.UserIdentifier} send you: {message}";
+
+            return _response.MountMessage(message: directmessage, clientSocket: user.ConnectionSocket);
+           
+        }
     }
 }

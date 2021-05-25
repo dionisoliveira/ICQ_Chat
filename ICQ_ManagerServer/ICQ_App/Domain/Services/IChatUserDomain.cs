@@ -7,5 +7,6 @@ namespace ICQ_AppDomain
         IResponse CreateUser(string user_identifier, object socket);
         IResponse GetAllUser();
         IUser GetUser(string user_identifier);
+        IResponse DMUser(string user_identifier, string message, IUser userMessage);
     }
 }

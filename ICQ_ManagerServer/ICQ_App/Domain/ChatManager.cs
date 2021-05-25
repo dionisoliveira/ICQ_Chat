@@ -21,10 +21,10 @@ namespace ICQ_AppDomain.Domain
             _chatUser = chatUser;
             _chatGroup = chatGroup;
             _response = response;
-           
+
         }
 
-     
+
 
 
         public IResponse ProcessMessage(string message, object connectionSocket)
@@ -39,7 +39,7 @@ namespace ICQ_AppDomain.Domain
                         return _chatUser.CreateUser(command[1], connectionSocket);
 
                     case CommandConst.CREATEGROUP:
-                        return _chatGroup.CreateNewGroup(command, _chatUser.GetUser(command[command.Length -1]));
+                        return _chatGroup.CreateNewGroup(command, _chatUser.GetUser(command[command.Length - 1]));
 
                     case CommandConst.CONNECTTOGROUP:
                         return _chatGroup.AddUserInGroup(command, _chatUser.GetUser(command[command.Length - 1]));
@@ -55,7 +55,8 @@ namespace ICQ_AppDomain.Domain
 
                     case CommandConst.LISTALL:
                         return _chatUser.GetAllUser();
-
+                    case CommandConst.DM:
+                        return _chatUser.DMUser(command[1].ToUpper(), command[2].ToUpper(), _chatUser.GetUser(command[command.Length - 1]));
                     case CommandConst.HELPER:
                         return GetHelper();
 
@@ -87,8 +88,8 @@ namespace ICQ_AppDomain.Domain
                     case CommandConst.EXITGROUP:
                         return _chatGroup.LeaveGroup(command, _chatUser.GetUser(command[3]));
 
-                    case CommandConst.CONNECTIONSTABILISHE:
-                        return ConnectionStabilished();
+                    case CommandConst.DM:
+                        return _chatUser.DMUser(command[2].ToUpper(), command[3].ToUpper(), _chatUser.GetUser(command[command.Length - 1]));
                     case CommandConst.HELPER:
                         return GetHelper();
                     default:
@@ -120,12 +121,14 @@ namespace ICQ_AppDomain.Domain
             string helperText = $"{Environment.NewLine} ********COMMAND********{ Environment.NewLine}";
             helperText += $"{CommandConst.CREATEUSER }: Create user - \" UC NAMEUSER \" {Environment.NewLine}";
             helperText += $"{CommandConst.LISTALL }: List all users in server - \"LS\"  {Environment.NewLine}";
+            helperText += $"{CommandConst.DM }: Use DM command send direct \" DM NAMEUSER YOURMESSAGE \"  {Environment.NewLine}";
 
             helperText += $"{CommandConst.CREATEGROUP }: Create new group \" GC NAMEGROUP \"  {Environment.NewLine}";
             helperText += $"{CommandConst.LISTALLGROUP }: List all group server - \"LSG\"  {Environment.NewLine}";
             helperText += $"{CommandConst.CONNECTTOGROUP }: Connect user a group - \"JG NAMEGROUP\" {Environment.NewLine}";
-           
+
             helperText += $"{CommandConst.EXITGROUP }: Leave group \" EXIT \"  {Environment.NewLine}";
+         
             helperText += $"{CommandConst.HELPER }: Helper COMMAND \" HELPER \"  {Environment.NewLine}";
             helperText += $"******** USE COMMAND FOR CREATE USER AND GROUP *******************  ";
 

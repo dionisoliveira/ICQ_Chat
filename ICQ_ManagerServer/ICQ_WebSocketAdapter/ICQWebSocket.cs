@@ -103,7 +103,14 @@ namespace ICQ_ManagerServer
                         }
                         else
                         {
-                            SendMessage(messagereturn, _serverStreamWrite);
+                            if (messagereturn.ClientSocket == null)
+                            {
+                                SendMessage(messagereturn, _serverStreamWrite);
+                            }
+                            else
+                            {
+                                SendMessage(messagereturn, messagereturn.ClientSocket as StreamWriter);
+                            }
                         }
 
                         _serverStreamWrite.Flush();

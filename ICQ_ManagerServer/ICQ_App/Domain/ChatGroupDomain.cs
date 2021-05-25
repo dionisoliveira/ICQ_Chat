@@ -33,12 +33,12 @@ namespace ICQ_AppDomain.Domain
             if (group == null)
             {
 
-                return _response.MountMessage($"Group has exist, if you want join, use the command: {CommandConst.CREATEGROUP} {group_identifier} {pipeSeparator} {group_identifier}", isSuccesMessage: false);
+                return _response.MountMessage($"Group hasn't exist, if you want create a group, use the command: {CommandConst.CREATEGROUP} {group_identifier} {pipeSeparator} {group_identifier}", isSuccesMessage: false);
             }
             else
             {
                 _groupList.Where(p => p.NameGroup == group_identifier).FirstOrDefault().UsersInGroup.Add(user);
-                return _response.MountMessage($"You have been added to the group {group_identifier}: Send you first message: \\ {user_identifier} {pipeSeparator} {group_identifier}");
+                return _response.MountMessage($"You have been added to the group {group_identifier}: Send you first message: {pipeSeparator} {user_identifier} {pipeSeparator} {group_identifier}");
             }
 
         }
@@ -58,7 +58,7 @@ namespace ICQ_AppDomain.Domain
             if (group != null)
             {
 
-                return _response.MountMessage($"Group has exist, if you want join, use the command: {CommandConst.CREATEGROUP} {group_identifier} {pipeSeparator} {user_identifier}", isSuccesMessage: false);
+                return _response.MountMessage($"Group has exist, if you want join, use the command: {CommandConst.CONNECTTOGROUP} {group_identifier} {pipeSeparator} {user_identifier}", isSuccesMessage: false);
             }
 
 
@@ -104,7 +104,7 @@ namespace ICQ_AppDomain.Domain
             var group_identifier = parameter[parameter.Length - 1];
             var user_identifier = parameter[parameter.Length - 3];
             _groupList.Where(p => p.NameGroup == group_identifier).FirstOrDefault().UsersInGroup.Remove(user);
-            var message = $"You left the group {group_identifier} \\ {user_identifier} \\  ";
+            var message = $"You left the group {group_identifier} {pipeSeparator} {user_identifier} {pipeSeparator}  ";
             return _response.MountMessage(message);
         }
 

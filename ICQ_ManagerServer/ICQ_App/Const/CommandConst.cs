@@ -14,6 +14,7 @@ namespace ICQ_AppDomain.Const
         public const string LISTALL = "LS"; // Show all users registred
         public const string LISTALLGROUP = "LSG"; // Show all users registred
         public const string EXITGROUP = "EXIT"; // Show all users registred
+        public const string DM = "DM"; // Show all users registred
 
         public const string ALLUSERSINGROUP = "LSGU"; // Show all menberrs in group
         public const string GROUPCOMMAND = "GCOMMAND"; // Show all menberrs in group
