@@ -1,12 +1,11 @@
 using System;
+using ICQ_AppAplicattion;
 using ICQ_ManagerServer;
 using ICQ_ManagerServer.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IC_AppTest
 {
@@ -26,7 +25,8 @@ namespace IC_AppTest
         public void RegisterUser()
         {
             var command = "UC DIONS";
-            var result = _chatManager.ProcessMessage(command, null);
+            var dataInput = new DataInput() { Message = command, Socket = null };
+            var result = _chatManager.ProcessDataReceiver(dataInput);
             Console.Write(result.Message);
             Assert.AreEqual<bool>(true, result.IsSucessMessage);
         }
@@ -35,8 +35,10 @@ namespace IC_AppTest
         public void RegisterUserTwoTimeSameUser()
         {
             var command = "UC DIONS";
-            var result = _chatManager.ProcessMessage(command, null);
-            var resultValidation = _chatManager.ProcessMessage(command, null);
+            var dataInput = new DataInput() { Message = command, Socket = null };
+            var result = _chatManager.ProcessDataReceiver(dataInput);
+
+            var resultValidation = _chatManager.ProcessDataReceiver(dataInput);
             Console.Write(resultValidation.Message);
             Assert.AreEqual<bool>(false, resultValidation.IsSucessMessage);
         }
@@ -45,11 +47,14 @@ namespace IC_AppTest
         public void RegisterUserAndCreateGroup()
         {
             var commandUser = "UC DIONS";
-            var result = _chatManager.ProcessMessage(commandUser, null);
+            var dataInput = new DataInput() { Message = commandUser, Socket = null };
+            var result = _chatManager.ProcessDataReceiver(dataInput);
             var split = result.Message.Split("\\");
             var commandGroup = $"GC TESLA {split[1]}";
 
-            var resultValidation = _chatManager.ProcessMessage(commandGroup, null);
+            var dataInputCreateGroup = new DataInput() { Message = commandGroup, Socket = null };
+
+            var resultValidation = _chatManager.ProcessDataReceiver(dataInputCreateGroup);
 
             Console.Write(resultValidation.Message);
             Assert.AreEqual<bool>(true, resultValidation.IsSucessMessage);
@@ -59,11 +64,15 @@ namespace IC_AppTest
         public void RegisterUserAndJoinInGroupNotExist()
         {
             var commandUser = "UC DIONS";
-            var result = _chatManager.ProcessMessage(commandUser, null);
+            var dataInputCreateGroup = new DataInput() { Message = commandUser, Socket = null };
+
+            var result = _chatManager.ProcessDataReceiver(dataInputCreateGroup);
             var split = result.Message.Split("\\");
             var commandGroup = $"JG VW {split[1]}";
 
-            var resultValidation = _chatManager.ProcessMessage(commandGroup, null);
+
+            var dataInputJoinGroup = new DataInput() { Message = commandGroup, Socket = null };
+            var resultValidation = _chatManager.ProcessDataReceiver(dataInputJoinGroup);
 
             Console.Write(resultValidation.Message);
             Assert.AreEqual<bool>(false, resultValidation.IsSucessMessage);
@@ -73,14 +82,20 @@ namespace IC_AppTest
         public void RegisterUserAndCreateGroupAndJoinInGroup()
         {
             var commandUser = "UC DIONS";
-            var result = _chatManager.ProcessMessage(commandUser, null);
-            var paramgroup = result.Message.Split("\\");
-            var commandGroup = $"GC FORD {paramgroup[1]}";
+            var dataInputCreateUser = new DataInput() { Message = commandUser, Socket = null };
+            var result = _chatManager.ProcessDataReceiver(dataInputCreateUser);
 
-            var resultValidation = _chatManager.ProcessMessage(commandGroup, null);
+            var paramgroup = result.Message.Split("\\");
+
+            var commandGroup = $"GC FORD {paramgroup[1]}";
+            var dataInputCreateGroup = new DataInput() { Message = commandGroup, Socket = null };
+            var resultValidation = _chatManager.ProcessDataReceiver(dataInputCreateGroup);
+
             var paramJoinGroup = resultValidation.Message.Split("\\");
+
             var commandJoin = $"JG FORD {paramJoinGroup[1]} {paramJoinGroup[2]}";
-            var resultJG = _chatManager.ProcessMessage(commandJoin, null);
+            var dataInputJoinGroup = new DataInput() { Message = commandJoin, Socket = null };
+            var resultJG = _chatManager.ProcessDataReceiver(dataInputJoinGroup);
 
             Console.Write(resultValidation.Message);
             Assert.AreEqual<bool>(true, resultJG.IsSucessMessage);
@@ -90,9 +105,8 @@ namespace IC_AppTest
         public void GetHelper()
         {
             var commandUser = "HELPER";
-            var result = _chatManager.ProcessMessage(commandUser, null);
-         
-
+            var dataHelperCommand = new DataInput() { Message = commandUser, Socket = null };
+            var result = _chatManager.ProcessDataReceiver(dataHelperCommand);
             Console.Write(result.Message);
             Assert.AreEqual<bool>(true, result.IsSucessMessage);
         }
@@ -101,41 +115,27 @@ namespace IC_AppTest
         public void LeaveTheGroup()
         {
             var commandUser = "UC DIONS";
-            var result = _chatManager.ProcessMessage(commandUser, null);
-            var paramgroup = result.Message.Split("\\");
-            var commandGroup = $"GC FORD {paramgroup[1]}";
+            var dataUser = new DataInput() { Message = commandUser, Socket = null };
+            var result = _chatManager.ProcessDataReceiver(dataUser);
 
-            var resultValidation = _chatManager.ProcessMessage(commandGroup, null);
+            var paramgroup = result.Message.Split("\\");
+
+            var commandGroup = $"GC FORD {paramgroup[1]}";
+            var dataGroup = new DataInput() { Message = commandGroup, Socket = null };
+            var resultValidation = _chatManager.ProcessDataReceiver(dataGroup);
+
             var paramJoinGroup = resultValidation.Message.Split("\\");
-            var commandJoin = $"GCOMMAND EXIT {paramJoinGroup[1]} {paramJoinGroup[2]}";
-            var resultJG = _chatManager.ProcessMessage(commandJoin, null);
+
+            var commandExit = $"GCOMMAND EXIT {paramJoinGroup[1]} {paramJoinGroup[2]}";
+            var grouCommandExit = new DataInput() { Message = commandExit, Socket = null };
+
+            var resultLeaveTheGroup = _chatManager.ProcessDataReceiver(grouCommandExit);
 
             Console.Write(resultValidation.Message);
-            Assert.AreEqual<bool>(true, resultJG.IsSucessMessage);
+            Assert.AreEqual<bool>(true, resultLeaveTheGroup.IsSucessMessage);
         }
 
 
-        [TestMethod]
-        public void JoinTheGroup()
-        {
-            var commandUser = "UC DIONS";
-            var result = _chatManager.ProcessMessage(commandUser, null);
-
-            var userJoin = "UC PEDRO";
-            var resultJoin = _chatManager.ProcessMessage(userJoin, null);
-
-            var paramgroup = result.Message.Split("\\");
-            var commandGroup = $"GC FORD {paramgroup[1]}";
-            var createGroup = _chatManager.ProcessMessage(commandGroup, null);
-
-            var resultJG = createGroup.Message.Split("\\");
-            var joinCommand = $"JG FORD {paramgroup[1]}";
-
-            var resultValidation = _chatManager.ProcessMessage(joinCommand, null);
-
-           
-            Console.Write(resultValidation.Message);
-            Assert.AreEqual<bool>(true, resultValidation.IsSucessMessage);
-        }
+       
     }
 }

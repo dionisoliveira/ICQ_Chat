@@ -10,7 +10,6 @@
     <Folder Include="Domain\Adpters\" />
     <Folder Include="Domain\Services\" />
     <Folder Include="Domain\Entities\" />
-    <Folder Include="Domain\UseCase\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ApplicationDependency.cs" />
