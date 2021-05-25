@@ -24,3 +24,14 @@ Aplicado testes unitários com MSTest
 Aplicado separação de responsabilidade por camadas no projeto ICQ_Server.
 
 No client foi adicionado regra de retry para manter a resiliência da aplicação caso o servidor pare de responder.
+
+ ********COMMAND********
+UC: Create user - " UC NAMEUSER " 
+LS: List all users in server - "LS"  
+DM: Use DM command send direct " DM NAMEUSER YOURMESSAGE "  
+GC: Create new group " GC NAMEGROUP "  
+LSG: List all group server - "LSG"  
+JG: Connect user a group - "JG NAMEGROUP" 
+EXIT: Leave group " EXIT "  
+HELPER: Helper COMMAND " HELPER "  
+******** USE COMMAND FOR CREATE USER AND GROUP *******************  
