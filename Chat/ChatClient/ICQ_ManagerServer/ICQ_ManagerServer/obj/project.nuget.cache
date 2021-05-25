@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "T7SirjiokmqNqUXGtpAiCCD/kWJhcsx24jAu2fbFPoeEhjMKwBV29LjqFBnnSOGB+OU4BYDS82QVcYySJayErw==",
+  "success": true,
+  "projectFilePath": "/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/ICQ_ManagerServer/ICQ_ManagerServer.csproj",
+  "expectedPackageFiles": [
+    "/Users/montreal/.nuget/packages/microsoft.extensions.dependencyinjection/5.0.1/microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
+    "/Users/montreal/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/5.0.0/microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

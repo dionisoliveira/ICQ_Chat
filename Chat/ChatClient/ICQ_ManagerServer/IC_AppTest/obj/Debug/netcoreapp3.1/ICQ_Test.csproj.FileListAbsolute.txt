@@ -1,0 +1,3 @@
+/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/IC_AppTest/obj/Debug/netcoreapp3.1/ICQ_Test.AssemblyInfoInputs.cache
+/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/IC_AppTest/obj/Debug/netcoreapp3.1/ICQ_Test.AssemblyInfo.cs
+/Users/montreal/Documents/icd_chat/ICQ_Chat/ICQ_ManagerServer/IC_AppTest/obj/Debug/netcoreapp3.1/ICQ_Test.csproj.CoreCompileInputs.cache

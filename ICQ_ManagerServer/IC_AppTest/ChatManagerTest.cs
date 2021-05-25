@@ -4,19 +4,23 @@ using ICQ_ManagerServer.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace IC_AppTest
 {
     [TestClass]
     public class ChatManagerTest
     {
         private static ServiceProvider _container;
-        private IChatManager _chatManager;
+        private IChatManagerService _chatManager;
 
 
         public ChatManagerTest()
         {
             _container = new IoCRegister().InitIoC();
-            _chatManager = _container.GetService<IChatManager>();
+            _chatManager = _container.GetService<IChatManagerService>();
         }
         [TestMethod]
         public void RegisterUser()

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ICQ_App\ICQ_App.csproj" />
+    <ProjectReference Include="..\ICQ_WebSocketAdapter\ICQ_AppAplicattion.csproj" />
+    <ProjectReference Include="..\ICQ_App\ICQ_AppDomain.csproj" />
   </ItemGroup>
 </Project>

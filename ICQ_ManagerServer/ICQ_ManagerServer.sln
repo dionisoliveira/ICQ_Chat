@@ -5,9 +5,15 @@ VisualStudioVersion = 16.0.808.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICQ_ManagerServer", "ICQ_ManagerServer\ICQ_ManagerServer.csproj", "{E4D16641-7027-46E3-BB67-038F9906C908}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICQ_App", "ICQ_App\ICQ_App.csproj", "{02923A20-AF36-4AD6-92AD-0AB0210B6056}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICQ_AppDomain", "ICQ_App\ICQ_AppDomain.csproj", "{02923A20-AF36-4AD6-92AD-0AB0210B6056}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICQ_Test", "IC_AppTest\ICQ_Test.csproj", "{721BC515-A968-426F-955E-83F06AB1E676}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICQ_AppAplicattion", "ICQ_WebSocketAdapter\ICQ_AppAplicattion.csproj", "{2C0EC3D8-C530-4DD2-B3ED-8EA4C6594D3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{A2C05E9D-8CD8-4089-AA9E-A59BD84BEC00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{1EF3B670-9068-479E-9963-C931D1976E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,11 +33,19 @@ Global
 		{721BC515-A968-426F-955E-83F06AB1E676}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721BC515-A968-426F-955E-83F06AB1E676}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{721BC515-A968-426F-955E-83F06AB1E676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0EC3D8-C530-4DD2-B3ED-8EA4C6594D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0EC3D8-C530-4DD2-B3ED-8EA4C6594D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0EC3D8-C530-4DD2-B3ED-8EA4C6594D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0EC3D8-C530-4DD2-B3ED-8EA4C6594D3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F8CF3F4-4F43-4D47-B7B8-FE3502803403}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2C0EC3D8-C530-4DD2-B3ED-8EA4C6594D3B} = {1EF3B670-9068-479E-9963-C931D1976E2D}
+		{02923A20-AF36-4AD6-92AD-0AB0210B6056} = {A2C05E9D-8CD8-4089-AA9E-A59BD84BEC00}
 	EndGlobalSection
 EndGlobal
