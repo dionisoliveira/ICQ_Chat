@@ -1,7 +1,7 @@
 Projeto criado para simular uma sala de bate papo, permitindo criar usuários, grupos e envio de mensagens entre usuários do grupo. 
 
 
-Para iniciar é necessário executar o projeto Server primeiro e após o projeto cliente.
+Para iniciar é necessário executar o projeto Server e depois o projeto cliente.
 
 *******Linhas de comandos devem ser obedecidas. 
 
