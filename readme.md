@@ -43,4 +43,4 @@ EXIT: Leave group " EXIT "
 
 HELPER: Helper COMMAND " HELPER "  
 
-******** USE COMMAND FOR CREATE USER AND GROUP *******************  
+******** USE COMMANDs FOR CREATE USERs AND GROUPs *******************  
