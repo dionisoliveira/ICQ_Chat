@@ -17,9 +17,7 @@ namespace ICQ_ManagerServer
         private TcpListener _server;
         private IChatManagerService _chatManager;
         private List<Thread> _listThask;
-        private StreamWriter _serverStreamWrite;
-
-
+        
         public ICQWebSocket(IChatManagerService chatManager)
         {
             _chatManager = chatManager;
@@ -89,7 +87,7 @@ namespace ICQ_ManagerServer
                         dataReceiver = dataReceiver.Substring(0, dataReceiver.IndexOf("$"));
 
 
-                        var dataInput = new DataInput() { Message = dataReceiver, Socket = _serverStreamWrite };
+                        var dataInput = new DataInput(message:dataReceiver, socket: _serverStreamWrite);
 
                         Console.WriteLine(dataReceiver);
 

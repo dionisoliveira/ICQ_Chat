@@ -3,8 +3,8 @@ namespace ICQ_AppDomain.Domain.Entities.Interface
 {
     public interface IDataReceiver
     {
-        public string Message { get; set; }
-        public object Socket { get; set; }
+        public string Message { get;  }
+        public object Socket { get;  }
 
 
     }

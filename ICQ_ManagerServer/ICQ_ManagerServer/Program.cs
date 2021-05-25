@@ -1,6 +1,4 @@
-﻿using System;
-using ICQ_AppDomain.Adpters;
-using ICQ_ManagerServer.Interface;
+﻿using ICQ_AppDomain.Adpters;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ICQ_ManagerServer
